@@ -1,0 +1,35 @@
+{
+  "name": "alexandria",
+  "version": "1.0.0",
+  "description": "Alexandria | Light Novel repository",
+  "author": "Joon Lee <l33j00n325@gmail.com>",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "nuxt-property-decorator": "^2.3.0",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "@nuxtjs/vuetify": "^1.0.0-beta.8",
+    "@babel/traverse": "^7.1.5",
+    "@babel/types": "^7.1.5",
+    "babel-eslint": "^10.0.1",
+    "babel-plugin-transform-imports": "^1.5.1",
+    "eslint": "^5.7.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-html": "^4.0.6",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-node": "^7.0.1",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vuetify": "^1.0.0-beta.2",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0"
+  }
+}
