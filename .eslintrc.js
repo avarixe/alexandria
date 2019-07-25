@@ -8,13 +8,13 @@ module.exports = {
   },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md
   extends: [
-    'standard'
-    // 'plugin:vue/recommended'
+    // 'standard'
+    'plugin:vue/recommended'
   ],
   // required to lint *.vue files
   plugins: [
-    'html'
-    // 'vuetify'
+    // 'html'
+    'vuetify'
   ],
   // add your custom rules here
   rules: {
@@ -25,17 +25,17 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 'off',
 
-    // 'indent': 'off',
-    // 'vue/script-indent': ['error', 2, {
-    //   'baseIndent': 1,
-    //   'switchCase': 1
-    // }],
+    'indent': 'off',
+    'vue/script-indent': ['error', 2, {
+      'baseIndent': 1,
+      'switchCase': 1
+    }],
 
-    // 'vue/singleline-html-element-content-newline': 'off',
+    'vue/singleline-html-element-content-newline': 'off',
 
-    // 'vuetify/no-deprecated-classes': 'error',
-    // 'vuetify/grid-unknown-attributes': 'warn',
-    // 'vuetify/no-legacy-grid': 'warn',
+    'vuetify/no-deprecated-classes': 'error',
+    'vuetify/grid-unknown-attributes': 'warn',
+    'vuetify/no-legacy-grid': 'warn',
 
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'

@@ -13,7 +13,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: 'MyFIFA Manager',
+    title: 'Alexandria',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
