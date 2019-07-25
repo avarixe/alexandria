@@ -53,7 +53,7 @@
     />
 
     <v-bottom-navigation
-      fixed
+      app
       :dark="dark"
       grow
     >

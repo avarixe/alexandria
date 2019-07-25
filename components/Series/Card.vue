@@ -12,6 +12,8 @@
       v-model="chapter"
       :items="chapters"
       item-value="value"
+      :dark="$store.state.dark"
+      :menu-props="$store.state.dark ? 'dark' : ''"
       hide-details
       class="mx-3"
     />

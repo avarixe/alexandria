@@ -7,7 +7,21 @@
     <v-row>
       <v-col cols="12">
         <div class="overline">Alexandria</div>
-        <div class="headline font-weight-thin">Series</div>
+        <div class="headline font-weight-thin">Library</div>
+      </v-col>
+
+      <v-col cols="12">
+        <v-btn
+          :dark="dark"
+          outlined
+          text
+          @click="$store.commit('SET_DARK', !dark)"
+        >
+          <v-icon left>
+            mdi-weather-{{ dark ? 'night' : 'sunny' }}
+          </v-icon>
+          <span>{{ dark ? 'Dark' : 'Light' }} Mode</span>
+        </v-btn>
       </v-col>
 
       <v-col cols="12">
@@ -30,21 +44,6 @@
         </v-data-iterator>
       </v-col>
     </v-row>
-
-    <v-bottom-navigation
-      fixed
-      :dark="dark"
-      grow
-    >
-      <v-btn
-        active-class=""
-        :dark="dark"
-        @click="$store.commit('SET_DARK', !dark)"
-      >
-        <span>Toggle Dark</span>
-        <v-icon>mdi-weather-{{ dark ? 'night' : 'sunny' }}</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
   </v-container>
 </template>
 
