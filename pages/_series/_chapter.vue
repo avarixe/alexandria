@@ -92,15 +92,15 @@
 
 <script>
   import { Vue, Component, Watch } from 'nuxt-property-decorator'
-  import { mapState } from 'vuex'
+  import { mapGetters } from 'vuex'
   import ChapterViewer from '@/components/Chapter/Viewer'
 
   @Component({
     components: {
       ChapterViewer
     },
-    computed: mapState('series', [
-      'collection'
+    computed: mapGetters('series', [
+      'getInfo'
     ])
   })
   export default class SeriesPage extends Vue {
@@ -123,7 +123,7 @@
     }
 
     get series () {
-      return this.collection[this.$route.params.series]
+      return this.getInfo(this.$route.params.series)
     }
 
     get chapters () {
@@ -137,6 +137,13 @@
       return 1 <= this.jumpChapter && this.jumpChapter <= this.lastChapter
         ? 'mdi-arrow-right'
         : null
+    }
+
+    mounted () {
+      this.$store.commit('series/BOOKMARK', {
+        series: this.$route.params.series,
+        chapter: this.chapter
+      })
     }
 
     goToTop () {

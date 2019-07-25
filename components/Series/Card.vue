@@ -24,7 +24,7 @@
         block
         @click="goToChapter"
       >
-        Read Series
+        Read
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -32,8 +32,13 @@
 
 <script>
   import { Vue, Component, Prop } from 'nuxt-property-decorator'
+  import { mapGetters } from 'vuex'
 
-  @Component
+  @Component({
+    computed: mapGetters('series', [
+      'getBookmark'
+    ])
+  })
   export default class SeriesCard extends Vue {
     @Prop({ type: Object, required: true }) series
 
@@ -44,6 +49,13 @@
         value,
         text: `Chapter ${value}`
       }))
+    }
+
+    mounted () {
+      const bookmark = this.getBookmark(this.series.key)
+      if (bookmark) {
+        this.chapter = bookmark
+      }
     }
 
     goToChapter () {
