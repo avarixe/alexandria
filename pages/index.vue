@@ -1,5 +1,9 @@
 <template>
-  <v-container fluid>
+  <v-container
+    fluid
+    fill-height
+    :style="style"
+  >
     <v-row>
       <v-col cols="12">
         <div class="overline">Alexandria</div>
@@ -26,6 +30,21 @@
         </v-data-iterator>
       </v-col>
     </v-row>
+
+    <v-bottom-navigation
+      fixed
+      :dark="dark"
+      grow
+    >
+      <v-btn
+        active-class=""
+        :dark="dark"
+        @click="$store.commit('SET_DARK', !dark)"
+      >
+        <span>Toggle Dark</span>
+        <v-icon>mdi-weather-{{ dark ? 'night' : 'sunny' }}</v-icon>
+      </v-btn>
+    </v-bottom-navigation>
   </v-container>
 </template>
 
@@ -38,9 +57,14 @@
     components: {
       SeriesCard
     },
-    computed: mapState('series', [
-      'collection'
-    ])
+    computed: {
+      ...mapState([
+        'dark'
+      ]),
+      ...mapState('series', [
+        'collection'
+      ])
+    }
   })
   export default class HomePage extends Vue {
     layout = () => 'default'
@@ -50,6 +74,14 @@
         ...this.collection[key],
         key
       }))
+    }
+
+    get style () {
+      return {
+        backgroundColor: this.dark ? '#333' : null,
+        color: this.dark ? '#eee' : null,
+        alignItems: 'flex-start'
+      }
     }
   }
 </script>

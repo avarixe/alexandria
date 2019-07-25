@@ -1,5 +1,5 @@
 <template>
-  <v-card>
+  <v-card :dark="$store.state.dark">
     <v-card-title class="subtitle-1 d-block text-center">
       <span class="primary--text font-weight-light">
         {{ series.title }}

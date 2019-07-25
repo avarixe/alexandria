@@ -1,6 +1,7 @@
 <template>
   <div
     class="ma-3"
+    :style="style"
     v-html="content"
   />
 </template>
@@ -25,6 +26,12 @@
     get file () {
       return this.chapter !== null
         ? `${this.series.path}/chapter-${this.chapterName}.html`
+        : null
+    }
+
+    get style () {
+      return this.$store.state.dark
+        ? { backgroundColor: '#333', color: '#eee' }
         : null
     }
 

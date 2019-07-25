@@ -1,5 +1,8 @@
 <template>
-  <v-container fluid>
+  <v-container
+    fluid
+    :style="style"
+  >
     <v-app-bar
       color="primary"
       dark
@@ -50,21 +53,14 @@
     />
 
     <v-bottom-navigation
-      app
+      fixed
+      :dark="dark"
       grow
     >
       <v-btn
-        :to="chapterLink(chapter - 1)"
-        nuxt
-        :disabled="chapter === 1"
-      >
-        <span>Previous</span>
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-
-      <v-btn
         to="/"
         nuxt
+        :dark="dark"
       >
         <span>Home</span>
         <v-icon>mdi-home</v-icon>
@@ -72,6 +68,26 @@
 
       <v-btn
         active-class=""
+        :dark="dark"
+        @click="$store.commit('SET_DARK', !dark)"
+      >
+        <span>{{ dark ? 'Dark' : 'Light' }} Mode</span>
+        <v-icon>mdi-weather-{{ dark ? 'night' : 'sunny' }}</v-icon>
+      </v-btn>
+
+      <v-btn
+        :to="chapterLink(chapter - 1)"
+        nuxt
+        :dark="dark"
+        :disabled="chapter === 1"
+      >
+        <span>Previous</span>
+        <v-icon>mdi-arrow-left</v-icon>
+      </v-btn>
+
+      <v-btn
+        active-class=""
+        :dark="dark"
         @click="goToTop"
       >
         <span>Back to Top</span>
@@ -81,6 +97,7 @@
       <v-btn
         :to="chapterLink(chapter + 1)"
         nuxt
+        :dark="dark"
         :disabled="chapter === lastChapter"
       >
         <span>Next</span>
@@ -92,16 +109,21 @@
 
 <script>
   import { Vue, Component, Watch } from 'nuxt-property-decorator'
-  import { mapGetters } from 'vuex'
+  import { mapState, mapGetters } from 'vuex'
   import ChapterViewer from '@/components/Chapter/Viewer'
 
   @Component({
     components: {
       ChapterViewer
     },
-    computed: mapGetters('series', [
-      'getInfo'
-    ])
+    computed: {
+      ...mapState([
+        'dark'
+      ]),
+      ...mapGetters('series', [
+        'getInfo'
+      ])
+    }
   })
   export default class SeriesPage extends Vue {
     layout = () => 'default'
@@ -131,6 +153,12 @@
         value,
         text: `Chapter ${value}`
       }))
+    }
+
+    get style () {
+      return this.dark
+        ? { backgroundColor: '#333', color: '#eee' }
+        : null
     }
 
     get jumpButton () {
@@ -167,10 +195,3 @@
     }
   }
 </script>
-
-<style scoped>
-  .v-bottom-navigation .v-btn:not(.v-btn--active) {
-    color: rgba(0, 0, 0, 0.87) !important;
-    background-color: transparent !important;
-  }
-</style>
