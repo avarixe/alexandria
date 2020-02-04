@@ -1,9 +1,7 @@
-<template>
-  <v-app>
-    <v-content>
-      <nuxt />
-    </v-content>
-  </v-app>
+<template lang="pug">
+  v-app
+    v-content
+      nuxt
 </template>
 
 <script>

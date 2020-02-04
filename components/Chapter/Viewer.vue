@@ -1,9 +1,5 @@
-<template>
-  <div
-    class="ma-3"
-    :style="style"
-    v-html="content"
-  />
+<template lang="pug">
+  .ma-3(:style="style" v-html="content")
 </template>
 
 <script>

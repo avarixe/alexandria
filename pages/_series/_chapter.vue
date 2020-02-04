@@ -1,21 +1,10 @@
-<template>
-  <v-container
-    fluid
-    :style="style"
-  >
-    <v-app-bar
-      color="primary"
-      dark
-      app
-    >
-      <v-toolbar-title>
-        {{ series.title }}
-      </v-toolbar-title>
-
-      <v-spacer />
-
-      <span style="width: 200px">
-        <v-text-field
+<template lang="pug">
+  v-container(fluid :style="style")
+    v-app-bar(color="primary" dark app)
+      v-toolbar-title {{ series.title }}
+      v-spacer
+      span(style="width: 200px")
+        v-text-field(
           v-model.number="jumpChapter"
           label="Jump to Chapter"
           prepend-icon="mdi-book-search"
@@ -23,88 +12,60 @@
           type="number"
           hide-details
           @click:append-outer="jumpToChaper"
-        />
-      </span>
-
-      <template #extension>
-        <v-tabs
+        )
+      template(#extension)
+        v-tabs(
           :value="thisChapter - 1"
           background-color="transparent"
           dark
           centered
           center-active
           show-arrows
-        >
-          <v-tab
+        )
+          v-tab(
             v-for="chapter in chapters"
             :key="chapter.value"
             :to="chapterLink(chapter.value)"
             nuxt
-          >
-            {{ chapter.value }}
-          </v-tab>
-        </v-tabs>
-      </template>
-    </v-app-bar>
-
-    <chapter-viewer
+          ) {{ chapter.value }}
+    chapter-viewer(
       :series="series"
       :chapter="thisChapter"
-    />
-
-    <v-bottom-navigation
-      app
-      :dark="dark"
-      grow
-    >
-      <v-btn
-        to="/"
-        nuxt
-        :dark="dark"
-      >
-        <span>Home</span>
-        <v-icon>mdi-home</v-icon>
-      </v-btn>
-
-      <v-btn
+    )
+    v-bottom-navigation(app :dark="dark" grow)
+      v-btn(to="/" nuxt :dark="dark")
+        span Home
+        v-icon mdi-home
+      v-btn(
         active-class=""
         :dark="dark"
         @click="$store.commit('SET_DARK', !dark)"
-      >
-        <span>{{ dark ? 'Dark' : 'Light' }} Mode</span>
-        <v-icon>mdi-weather-{{ dark ? 'night' : 'sunny' }}</v-icon>
-      </v-btn>
-
-      <v-btn
+      )
+        span {{ dark ? 'Dark' : 'Light' }} Mode
+        v-icon mdi-weather-{{ dark ? 'night' : 'sunny' }}
+      v-btn(
         :to="chapterLink(thisChapter - 1)"
         nuxt
         :dark="dark"
         :disabled="thisChapter === 1"
-      >
-        <span>Previous</span>
-        <v-icon>mdi-arrow-left</v-icon>
-      </v-btn>
-
-      <v-btn
+      )
+        span Previous
+        v-icon mdi-arrow-left
+      v-btn(
         active-class=""
         :dark="dark"
         @click="goToTop"
-      >
-        <span>Back to Top</span>
-        <v-icon>mdi-arrow-up</v-icon>
-      </v-btn>
-
-      <v-btn
+      )
+        span Back to Top
+        v-icon mdi-arrow-up
+      v-btn(
         :to="chapterLink(thisChapter + 1)"
         nuxt
         :dark="dark"
         :disabled="thisChapter === lastChapter"
-      >
-        <span>Next</span>
-        <v-icon>mdi-arrow-right</v-icon>
-      </v-btn>
-    </v-bottom-navigation>
-  </v-container>
+      )
+        span Next
+        v-icon mdi-arrow-right
 </template>
 
 <script>
