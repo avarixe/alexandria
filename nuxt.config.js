@@ -6,7 +6,7 @@ export default {
 
   server: {
     host: '0.0.0.0',
-    port: '8080'
+    port: process.env.NODE_ENV === 'production' ? '8082' : '4000'
   },
 
   /*
@@ -20,9 +20,7 @@ export default {
       { hid: 'description', name: 'description', content: pkg.description }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700' },
-      { rel: 'stylesheet', href: 'https://cdn.materialdesignicons.com/2.8.94/css/materialdesignicons.min.css' }
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
     ]
   },
 
@@ -38,13 +36,9 @@ export default {
   */
   // loading: '~/components/App/LoadingOverlay.vue', // { color: '#3B8070' },
 
-  devModules: [
+  buildModules: [
     '@nuxtjs/vuetify'
   ],
-
-  vuetify: {
-    assets: false
-  },
 
   /*
   ** Plugins to load before mounting the App
@@ -57,13 +51,6 @@ export default {
   */
   build: {
     // analyze: true,
-
-    babel: {
-      plugins: [
-        ['@babel/plugin-proposal-decorators', { legacy: true }],
-        ['@babel/plugin-proposal-class-properties', { loose: true }]
-      ]
-    },
 
     transpile: [/^vuetify/],
 

@@ -1,7 +1,7 @@
 <template>
   <v-container
     fluid
-    fill-height
+    class="fill-height"
     :style="style"
   >
     <v-row>
@@ -48,11 +48,11 @@
 </template>
 
 <script>
-  import { Vue, Component } from 'nuxt-property-decorator'
   import { mapState } from 'vuex'
   import SeriesCard from '@/components/Series/Card'
 
-  @Component({
+  export default {
+    name: 'HomePage',
     components: {
       SeriesCard
     },
@@ -62,24 +62,19 @@
       ]),
       ...mapState('series', [
         'collection'
-      ])
-    }
-  })
-  export default class HomePage extends Vue {
-    layout = () => 'default'
-
-    get seriesList () {
-      return Object.keys(this.collection).map(key => ({
-        ...this.collection[key],
-        key
-      }))
-    }
-
-    get style () {
-      return {
-        backgroundColor: this.dark ? '#333' : null,
-        color: this.dark ? '#eee' : null,
-        alignItems: 'flex-start'
+      ]),
+      seriesList () {
+        return Object.keys(this.collection).map(key => ({
+          ...this.collection[key],
+          key
+        }))
+      },
+      style () {
+        return {
+          backgroundColor: this.dark ? '#333' : null,
+          color: this.dark ? '#eee' : null,
+          alignItems: 'flex-start'
+        }
       }
     }
   }

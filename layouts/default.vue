@@ -7,9 +7,7 @@
 </template>
 
 <script>
-  import { Vue, Component } from 'nuxt-property-decorator'
-
-  @Component
-  export default class Layout extends Vue {
+  export default {
+    name: 'Layout'
   }
 </script>

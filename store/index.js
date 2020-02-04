@@ -25,8 +25,9 @@ export const actions = {
       }
 
       // load bookmarks
-      const bookmarks = JSON.parse(parsed.bookmarks)
-      if (bookmarks) {
+      if (parsed.bookmarks) {
+        const bookmarks = JSON.parse(parsed.bookmarks)
+
         for (let series in bookmarks) {
           commit('series/BOOKMARK', {
             series,

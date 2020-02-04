@@ -33,41 +33,46 @@
 </template>
 
 <script>
-  import { Vue, Component, Prop } from 'nuxt-property-decorator'
   import { mapGetters } from 'vuex'
 
-  @Component({
-    computed: mapGetters('series', [
-      'getBookmark'
-    ])
-  })
-  export default class SeriesCard extends Vue {
-    @Prop({ type: Object, required: true }) series
-
-    chapter = 1
-
-    get chapters () {
-      return this.series.chapters.map(value => ({
-        value,
-        text: `Chapter ${value}`
-      }))
-    }
-
+  export default {
+    name: 'SeriesCard',
+    props: {
+      series: {
+        type: Object,
+        required: true
+      }
+    },
+    data: () => ({
+      chapter: 1
+    }),
+    computed: {
+      ...mapGetters('series', [
+        'getBookmark'
+      ]),
+      chapters () {
+        return this.series.chapters.map(value => ({
+          value,
+          text: `Chapter ${value}`
+        }))
+      }
+    },
     mounted () {
       const bookmark = this.getBookmark(this.series.key)
       if (bookmark) {
         this.chapter = bookmark
       }
-    }
-
-    goToChapter () {
-      this.$router.push({
-        name: 'series-chapter',
-        params: {
-          series: this.series.key,
-          chapter: this.chapter
-        }
-      })
+    },
+    methods: {
+      goToChapter () {
+        this.$router.push({
+          name: 'series-chapter',
+          params: {
+            series: this.series.key,
+            chapter: this.chapter
+          }
+        })
+      }
     }
   }
 </script>
