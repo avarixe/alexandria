@@ -77,14 +77,14 @@
     components: {
       ChapterViewer
     },
+    data: () => ({
+      jumpChapter: null
+    }),
     head () {
       return {
         title: `${this.series.title} - Chapter ${this.thisChapter}`
       }
     },
-    data: () => ({
-      jumpChapter: null
-    }),
     computed: {
       ...mapState([
         'dark'

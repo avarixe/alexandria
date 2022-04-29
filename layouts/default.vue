@@ -1,6 +1,6 @@
 <template lang="pug">
   v-app
-    v-content
+    v-main
       nuxt
 </template>
 
