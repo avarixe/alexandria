@@ -1,5 +1,5 @@
 <template lang="pug">
-  v-card(:dark="$store.state.dark")
+  v-card
     v-card-title.subtitle-1.d-block.text-center
       span.primary--text.font-weight-light {{ series.title }}
     v-divider.mx-3
@@ -7,8 +7,6 @@
       v-model="chapter"
       :items="chapters"
       item-value="value"
-      :dark="$store.state.dark"
-      :menu-props="$store.state.dark ? 'dark' : ''"
       hide-details
     )
     v-card-actions
@@ -56,7 +54,7 @@
       goToChapter () {
         this.$router.push({
           name: 'series-chapter',
-          params: {
+          query: {
             series: this.series.key,
             chapter: this.chapter
           }

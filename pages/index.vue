@@ -1,15 +1,14 @@
 <template lang="pug">
-  v-container.fill-height(fluid :style="style")
+  v-container.fill-height.align-start(fluid)
     v-row
       v-col(cols="12")
         .overline Alexandria
         .headline.font-weight-thin Library
       v-col(cols="12")
         v-btn(
-          :dark="dark"
           outlined
           text
-          @click="$store.commit('SET_DARK', !dark)"
+          @click="setDark"
         )
           v-icon(left) mdi-weather-{{ dark ? 'night' : 'sunny' }}
           span {{ dark ? 'Dark' : 'Light' }} Mode
@@ -46,13 +45,12 @@
           ...this.collection[key],
           key
         }))
-      },
-      style () {
-        return {
-          backgroundColor: this.dark ? '#333' : null,
-          color: this.dark ? '#eee' : null,
-          alignItems: 'flex-start'
-        }
+      }
+    },
+    methods: {
+      setDark () {
+        this.$cookies.set('dark', !this.dark)
+        this.$store.commit('setDark', !this.dark)
       }
     }
   }

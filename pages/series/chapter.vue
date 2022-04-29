@@ -1,6 +1,6 @@
 <template lang="pug">
-  v-container(fluid :style="style")
-    v-app-bar(color="primary" dark app)
+  v-container(fluid)
+    v-app-bar(app)
       v-toolbar-title {{ series.title }}
       v-spacer
       span(style="width: 200px")
@@ -16,8 +16,6 @@
       template(#extension)
         v-tabs(
           :value="thisChapter - 1"
-          background-color="transparent"
-          dark
           centered
           center-active
           show-arrows
@@ -26,34 +24,32 @@
             v-for="chapter in chapters"
             :key="chapter.value"
             :to="chapterLink(chapter.value)"
+            exact
             nuxt
           ) {{ chapter.value }}
     chapter-viewer(
       :series="series"
       :chapter="thisChapter"
     )
-    v-bottom-navigation(app :dark="dark" grow)
-      v-btn(to="/" nuxt :dark="dark")
+    v-bottom-navigation(app grow)
+      v-btn(to="/" nuxt)
         span Home
         v-icon mdi-home
       v-btn(
         active-class=""
-        :dark="dark"
-        @click="$store.commit('SET_DARK', !dark)"
+        @click="setDark"
       )
         span {{ dark ? 'Dark' : 'Light' }} Mode
         v-icon mdi-weather-{{ dark ? 'night' : 'sunny' }}
       v-btn(
         :to="chapterLink(thisChapter - 1)"
         nuxt
-        :dark="dark"
         :disabled="thisChapter === 1"
       )
         span Previous
         v-icon mdi-arrow-left
       v-btn(
         active-class=""
-        :dark="dark"
         @click="goToTop"
       )
         span Back to Top
@@ -61,7 +57,6 @@
       v-btn(
         :to="chapterLink(thisChapter + 1)"
         nuxt
-        :dark="dark"
         :disabled="thisChapter === lastChapter"
       )
         span Next
@@ -93,13 +88,13 @@
         'getInfo'
       ]),
       thisChapter () {
-        return parseInt(this.$route.params.chapter)
+        return parseInt(this.$route.query.chapter)
       },
       lastChapter () {
         return this.series.chapters[this.series.chapters.length - 1]
       },
       series () {
-        return this.getInfo(this.$route.params.series)
+        return this.getInfo(this.$route.query.series)
       },
       chapters () {
         return this.series.chapters.map(value => ({
@@ -107,22 +102,27 @@
           text: `Chapter ${value}`
         }))
       },
-      style () {
-        return this.dark
-          ? { backgroundColor: '#333', color: '#eee' }
-          : null
-      },
       jumpButton () {
         return 1 <= this.jumpChapter && this.jumpChapter <= this.lastChapter
           ? 'mdi-arrow-right'
           : null
       }
     },
-    mounted () {
-      this.$store.commit('series/BOOKMARK', {
-        series: this.$route.params.series,
+    fetch () {
+      this.$cookies.set(
+        'bookmarks',
+        JSON.stringify({
+          ...this.$store.state.series.bookmarks,
+          [this.series]: this.chapter
+        })
+      )
+      this.$store.commit('series/bookmark', {
+        series: this.$route.query.series,
         chapter: this.thisChapter
       })
+    },
+    watch: {
+      '$route.query': '$fetch'
     },
     methods: {
       goToTop () {
@@ -131,8 +131,8 @@
       chapterLink (chapter) {
         return {
           name: 'series-chapter',
-          params: {
-            series: this.$route.params.series,
+          query: {
+            series: this.$route.query.series,
             chapter
           }
         }
@@ -141,6 +141,10 @@
         if (1 <= this.jumpChapter && this.jumpChapter <= this.lastChapter) {
           this.$router.push(this.chapterLink(this.jumpChapter))
         }
+      },
+      setDark () {
+        this.$cookies.set('dark', !this.dark)
+        this.$store.commit('setDark', !this.dark)
       }
     }
   }

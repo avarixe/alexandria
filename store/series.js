@@ -1,5 +1,3 @@
-import Cookie from 'js-cookie'
-
 // initial state
 export const state = () => ({
   bookmarks: {},
@@ -18,8 +16,7 @@ export const getters = {
 }
 
 export const mutations = {
-  BOOKMARK (state, { series, chapter }) {
+  bookmark (state, { series, chapter }) {
     state.bookmarks[series] = chapter
-    Cookie.set('bookmarks', JSON.stringify(state.bookmarks))
   }
 }

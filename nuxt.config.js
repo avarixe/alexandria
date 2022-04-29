@@ -2,7 +2,7 @@ import pkg from './package'
 import nodeExternals from 'webpack-node-externals'
 
 export default {
-  mode: 'universal',
+  target: 'static',
 
   server: {
     host: '0.0.0.0',
@@ -40,10 +40,15 @@ export default {
     '@nuxtjs/vuetify'
   ],
 
+  modules: [
+    'cookie-universal-nuxt'
+  ],
+
   /*
   ** Plugins to load before mounting the App
   */
   plugins: [
+    { src: '@/plugins/nuxt-client-init.js', ssr: false }
   ],
 
   /*

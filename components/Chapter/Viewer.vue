@@ -1,5 +1,5 @@
 <template lang="pug">
-  .ma-3(:style="style" v-html="content")
+  .ma-3(v-html="content")
 </template>
 
 <script>
@@ -29,11 +29,6 @@
       file () {
         return this.chapter !== null
           ? `${this.series.path}/chapter-${this.chapterName}.html`
-          : null
-      },
-      style () {
-        return this.$store.state.dark
-          ? { backgroundColor: '#333', color: '#eee' }
           : null
       }
     },
